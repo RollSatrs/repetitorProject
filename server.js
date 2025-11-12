@@ -6,6 +6,6 @@ app.use(express.json());
 app.get("/asanali",(req,res)=>{
     res.send("Asanali")
 })
-app.listen(3001,()=>{
+app.listen(3001,"0.0.0.0",()=>{
     console.log("Сервер запущен")
 })
