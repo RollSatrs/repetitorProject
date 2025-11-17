@@ -4,7 +4,7 @@ import { SignupForm } from "@/components/signup-form"
 
 export default function SignupPage() {
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
+    <div className="grid lg:grid-cols-2">
       {/* Левая колонка: логотип + форма */}
       <div className="flex flex-col p-6 md:p-10 h-screen">
         {/* Логотип */}
