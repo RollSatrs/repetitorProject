@@ -37,7 +37,11 @@ export function SignupForm({
   const [schoolName, setSchoolName] = useState("")
   const [schoolClass, setSchoolClass] = useState("")
 
+
+
   const [error, setError] = useState("")
+
+  
 
   const handlerSubmit = async(e: React.FormEvent) =>{
     e.preventDefault()
@@ -49,7 +53,40 @@ export function SignupForm({
       setError("Пароли не совпадают")
       return
     }
-    const res = await fetch("/created/user")
+
+    const paload = {
+      role,
+      firstName,
+      lastName,
+      email,
+      city,
+      phone,
+      password,
+
+      // Данные студента
+      educationType,
+      educationName,
+      cource,
+
+      // Данные школьника
+      schoolName,
+      schoolClass,
+    }
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(paload)
+    })
+
+    const data = await res.json()
+
+    if(!res.ok){
+      setError(data.message || "Произошла ошибка")
+      return      
+    }
+    
+    window.location.href = "/home"
+
   }
 
   return (

@@ -18,10 +18,27 @@ export function LoginForm({
 }: React.ComponentProps<"form">) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
+  const [error, setError] = useState("")
+  const payload = {
+    email,
+    password
+  }
   const handlerSubmit = async(e: React.FormEvent) =>{
     e.preventDefault()
-    const res = await fetch("/login/user")
+    const res = await fetch("/login/user",{
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+
+    const data = await res.json()
+
+    if(!res.ok){
+      setError(data.message || "Произошла ошибка")
+      return      
+    }
+    
+    window.location.href = "/home"
+
   }
 
   return (
