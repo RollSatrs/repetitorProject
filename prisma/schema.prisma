@@ -13,3 +13,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+
+model User {
+  id            Int             @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String          @unique
+  city          String
+  phone         String
+  password      String
+  avatarUrl     String?
+  createdAt     DateTime        @default(now())
+  role          Role            @default(STUDENT)
+
+  teacher        Teacher?
+  student        Student?
+  studentSchool  StudentSchool?
+
+  @@map("user")
+}
+
+model Teacher {
+  id     Int @id @default(autoincrement())
+  userId Int @unique
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("teacher")
+}
+
+model Student {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @unique
+  typeEducation   Education @default(university)
+  educationName   String    @unique
+  educationCourse String
+  languageLevel   String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("student")
+}
+
+model StudentSchool {
+  id            Int     @id @default(autoincrement())
+  userId        Int     @unique
+  schoolName    String
+  schoolClass   String
+  languageLevel String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("student_school")
+}
+
+enum Role {
+  TEACHER
+  STUDENT
+}
+
+enum Education {
+  university
+  college
+}
