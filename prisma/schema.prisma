@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  output = "../generated/prisma"
 }
 
 datasource db {
@@ -26,7 +26,7 @@ model User {
   password      String
   avatarUrl     String?
   createdAt     DateTime        @default(now())
-  role          Role            @default(STUDENT)
+  role          Role            @default(schoolchildren)
 
   teacher        Teacher?
   student        Student?
@@ -49,7 +49,7 @@ model Student {
   userId          Int       @unique
   typeEducation   Education @default(university)
   educationName   String    @unique
-  educationCourse String
+  course          String
   languageLevel   String?
 
   user User @relation(fields: [userId], references: [id])
@@ -70,8 +70,10 @@ model StudentSchool {
 }
 
 enum Role {
-  TEACHER
-  STUDENT
+  teacher
+  student
+  schoolchildren
+  
 }
 
 enum Education {
