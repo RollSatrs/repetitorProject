@@ -21,7 +21,7 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const [role, setRole] = useState<"student" | "school" | null>("school")
+  const [role, setRole] = useState<"student" | "schoolchildren" | null>("schoolchildren")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLasttName] = useState("")
   const [email, setEmail] = useState("")
@@ -73,7 +73,7 @@ export function SignupForm({
       schoolClass,
     }
 
-    const res = await fetch("/api/register", {
+    const res = await fetch("/auth/register", {
       method: "POST",
       body: JSON.stringify(paload)
     })
@@ -110,8 +110,8 @@ export function SignupForm({
                 Студент
             </Button>
             <Button
-              onClick={() =>setRole("school")} 
-              variant={role === "school" ? "default" : "outline"}
+              onClick={() =>setRole("schoolchildren")} 
+              variant={role === "schoolchildren" ? "default" : "outline"}
               type="button" 
             >
               Школьник
@@ -243,7 +243,7 @@ export function SignupForm({
 
 
 
-        {role === "school" &&(
+        {role === "schoolchildren" &&(
           <>
             <Field>
               <FieldLabel htmlFor="schoolName">Название школы</FieldLabel>
